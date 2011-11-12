@@ -6,7 +6,6 @@ $(document).ready(function() {
 
     var percent = 10; // percentage increase in box size 
     var percentplus = percent/100 + 1;
-    var percentminus = 1 - percent/100;
     var cont = $('#main');
     var duration = { duration: 1000, queue: false };
 
