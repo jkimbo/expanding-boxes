@@ -5,7 +5,8 @@
 $(document).ready(function() {
 
     var percent = 10; // percentage increase in box size 
-    var percenttimes = percent/100 + 1;
+    var percentplus = percent/100 + 1;
+    var percentminus = 1 - percent/100;
     var cont = $('#main');
     var duration = 1000;
 
@@ -18,45 +19,59 @@ $(document).ready(function() {
     $('.box').hover(function() {
         var box = $(this);
         var left = parseInt(box.css('left'));
-        if(box.prev().length && box.next().length) { // center box
+        var prev = box.prev().get(0);
+        var next = box.next().get(0);
+        var diff = this.origwidth*percentplus - this.origwidth;
+
+        /* Center box */
+        if(box.prev().length && box.next().length) {
             box.animate({
-                width: "330px",
-                height: "220px",
-                left: this.origleft-10
+                width: this.origwidth*percentplus,
+                height: this.origheight*percentplus,
+                left: this.origleft-(diff/2)
             }, { duration: duration, queue: false });
             box.prev().animate({
-                width: "300px",
-                height: "200px"
+                width: prev.origwidth - (diff/2),
+                height: prev.origheight 
             }, { duration: duration, queue: false });
             box.next().animate({
-                width: "300px",
-                height: "200px",
-                left: box.next().get(0).origleft+10
+                width: next.origwidth - (diff/2),
+                height: next.origheight,
+                left: next.origleft+(diff/2)
             }, { duration: duration, queue: false });
-        } else if(box.prev().length) { // right box
+        } else 
+
+        /* Right box */     
+        if(box.prev().length) {
             box.animate({
-                width: "330px",
-                height: "220px",
-                left: this.origleft-10
+                width: this.origwidth*percentplus,
+                height: this.origheight*percentplus,
+                left: this.origleft-(diff)
             }, { duration: duration, queue: false });
             box.prev().animate({
-                width: "300px",
-                height: "200px"
+                width: prev.origwidth - (diff),
+                height: prev.origheight 
             }, { duration: duration, queue: false });
-        } else { // left box
+        } else 
+
+        /* Left box */     
+        {
             box.animate({
-                width: "330px",
-                height: "220px",
-                left: this.origleft
+                width: this.origwidth*percentplus,
+                height: this.origheight*percentplus
             }, { duration: duration, queue: false });
             box.next().animate({
-                width: "290px",
-                height: "200px",
-                left: box.next().get(0).origleft+20
+                width: next.origwidth - (diff),
+                height: next.origheight,
+                left: next.origleft+diff
             }, { duration: duration, queue: false });
         }
     }, function() {
         var box = $(this);
+        var left = parseInt(box.css('left'));
+        var prev = box.prev().get(0);
+        var next = box.next().get(0);
+
         if(box.prev().length && box.next().length) { // center box
             box.animate({
                 width: this.origwidth,
@@ -64,13 +79,13 @@ $(document).ready(function() {
                 left: this.origleft 
             }, { duration: duration, queue: false });
             box.prev().animate({
-                width: box.prev().get(0).origwidth,
-                height: box.prev().get(0).origheight,
+                width: prev.origwidth,
+                height: prev.origheight,
             }, { duration: duration, queue: false });
             box.next().animate({
-                width: box.next().get(0).origwidth,
-                height: box.next().get(0).origheight,
-                left: box.next().get(0).origleft
+                width: next.origwidth,
+                height: next.origheight,
+                left: next.origleft
             }, { duration: duration, queue: false });
         } else if(box.prev().length) { // right box
             box.animate({
@@ -79,8 +94,8 @@ $(document).ready(function() {
                 left: this.origleft
             }, { duration: duration, queue: false });
             box.prev().animate({
-                width: box.prev().get(0).origwidth,
-                height: box.prev().get(0).origheight,
+                width: prev.origwidth,
+                height: prev.origheight,
             }, { duration: duration, queue: false });
         } else { // left box
             box.animate({
@@ -89,9 +104,9 @@ $(document).ready(function() {
                 left: this.origleft
             }, { duration: duration, queue: false });
             box.next().animate({
-                width: box.next().get(0).origwidth,
-                height: box.next().get(0).origheight,
-                left: box.next().get(0).origleft
+                width: next.origwidth,
+                height: next.origheight,
+                left: next.origleft
             }, { duration: duration, queue: false });
         }
     });
