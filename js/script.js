@@ -7,7 +7,7 @@ $(document).ready(function() {
     var percent = 10; // percentage increase in box size 
     var percentplus = percent/100 + 1;
     var cont = $('#main');
-    var duration = { duration: 1000, queue: false };
+    var duration = { duration: 400, queue: false };
 
     $('.box').each(function(index) {
         this.origleft = parseInt($(this).css('left')); // store the original left value to element
